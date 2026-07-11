@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Proyecto Power BI | Ventas y Rentabilidad</title>
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+    <header class="site-header compact">
+      <nav class="nav">
+        <a class="brand" href="../index.html">Data Analytics Portfolio</a>
+        <div class="nav-links">
+          <a href="../index.html#proyectos">Proyectos</a>
+          <a href="../index.html#habilidades">Habilidades</a>
+          <a href="../index.html#contacto">Contacto</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="case-study">
+      <section class="case-hero">
+        <p class="eyebrow">Power BI · DAX · Modelado</p>
+        <h1>Ventas, presupuesto y rentabilidad</h1>
+        <p>
+          Proyecto practico construido desde cero para ejercitar modelo estrella,
+          calendario, medidas DAX, ranking, presupuesto vs real, tooltips y analisis
+          por producto, region y cliente.
+        </p>
+        <div class="case-meta">
+          <span>Herramienta: Power BI Desktop</span>
+          <span>Datos: CSV ficticios</span>
+          <span>Periodo: 2023-2025</span>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Vista general</p>
+          <h2>Objetivo del proyecto</h2>
+        </div>
+        <p class="wide-text">
+          El objetivo fue construir un dashboard comercial completo para analizar ventas,
+          margen, descuentos, devoluciones, clientes, productos, sucursales y presupuesto.
+          El caso esta disenado para practicar decisiones reales de BI: granularidades
+          distintas, relaciones entre tablas, calendario, medidas reutilizables y formato
+          visual orientado a negocio.
+        </p>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Capturas</p>
+          <h2>Paginas del reporte</h2>
+        </div>
+        <div class="screenshot-grid">
+          <figure class="screenshot-card">
+            <img src="../assets/img/powerbi-ejecutivo.png" alt="Dashboard ejecutivo en Power BI">
+            <figcaption>KPIs principales, ventas, margen y comparativos.</figcaption>
+          </figure>
+          <figure class="screenshot-card">
+			<img src="../assets/img/powerbi-productos.png" alt="Dashboard de productos en Power BI">
+			<figcaption>Analisis de productos por categoria, subcategoria, marca y ranking.</figcaption>
+		  </figure>
+          <figure class="screenshot-card">
+            <img src="../assets/img/powerbi-region.png" alt="Dashboard de ventas por region en Power BI">
+            <figcaption>Analisis por region, sucursal, gerente y presupuesto.</figcaption>
+          </figure>
+          <figure class="screenshot-card">
+            <img src="../assets/img/powerbi-clientes.png" alt="Dashboard de clientes en Power BI">
+            <figcaption>Top clientes, segmentos, industrias, ciudades y mapa.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="section split">
+        <div>
+          <p class="eyebrow">Modelo</p>
+          <h2>Tablas y relaciones</h2>
+        </div>
+        <div class="content-list">
+          <p>
+            El modelo sigue una estructura estrella: tablas de hechos para ventas,
+            devoluciones y presupuesto; dimensiones para fecha, producto, cliente y
+            sucursal.
+          </p>
+          <ul>
+            <li><strong>FactVentas:</strong> ventas diarias por cliente, producto y sucursal.</li>
+            <li><strong>FactPresupuesto:</strong> presupuesto mensual por categoria y sucursal.</li>
+            <li><strong>FactDevoluciones:</strong> devoluciones ligadas a VentaID.</li>
+            <li><strong>DimFecha:</strong> calendario marcado como tabla de fechas.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">DAX</p>
+          <h2>Medidas destacadas</h2>
+        </div>
+        <div class="code-grid">
+          <pre><code>Ventas Netas =
+SUM ( FactVentas[ImporteNeto] )</code></pre>
+          <pre><code>% Margen =
+DIVIDE ( [Margen], [Ventas Netas] )</code></pre>
+          <pre><code>% Cumplimiento Presupuesto =
+DIVIDE ( [Ventas Netas], [Presupuesto Ventas] )</code></pre>
+          <pre><code>Ranking Productos =
+IF (
+    ISINSCOPE ( DimProducto[Producto] ),
+    RANKX (
+        ALLSELECTED ( DimProducto[Producto] ),
+        [Ventas Netas],
+        ,
+        DESC,
+        DENSE
+    )
+)</code></pre>
+        </div>
+      </section>
+
+      <section class="section split">
+        <div>
+          <p class="eyebrow">Aprendizajes</p>
+          <h2>Decisiones tecnicas</h2>
+        </div>
+        <div class="content-list">
+          <ul>
+            <li>Crear una version de CSV con formato regional es-MX para evitar errores de separador decimal.</li>
+            <li>Usar una dimension mensual para comparar ventas diarias contra presupuesto mensual.</li>
+            <li>Separar medidas base de medidas derivadas para simplificar mantenimiento.</li>
+            <li>Validar relaciones cuando una medida de devoluciones no respondia al filtro de producto.</li>
+            <li>Usar tooltips para mostrar margen, descuento y devoluciones sin saturar paginas principales.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section contact">
+        <p class="eyebrow">Estado</p>
+        <h2>Proyecto documentado para portafolio.</h2>
+        <p>
+          Cuando publiques el reporte con datos ficticios, agrega aqui el enlace de
+          Power BI Publish to Web o capturas reales del dashboard.
+        </p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span><a href="../index.html">Volver al portafolio</a></span>
+      <span>Proyecto Power BI</span>
+    </footer>
+  </body>
+</html>
