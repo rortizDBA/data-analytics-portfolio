@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Proyecto Power BI | Indicadores Mundiales</title>
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+    <header class="site-header compact">
+      <nav class="nav">
+        <a class="brand" href="../index.html">Data Analytics Portfolio</a>
+        <div class="nav-links">
+          <a href="../index.html#proyectos">Proyectos</a>
+          <a href="../index.html#habilidades">Habilidades</a>
+          <a href="../index.html#contacto">Contacto</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="case-study">
+      <section class="case-hero">
+        <p class="eyebrow">Power BI · DAX · Modelado</p>
+        <h1>Población por país y continente</h1>
+        <p>
+          
+        </p>
+        <div class="case-meta">
+          <span>Herramienta: Power BI Desktop</span>
+          <span>Datos: CSV ficticios</span>
+          <span>Categorías: Continente & Población</span>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Vista general</p>
+          <h2>Objetivo del proyecto</h2>
+        </div>
+        <p class="wide-text">
+          Se busca realizar una integración de las fuentes de datos proporcionadas que nos 
+		  sumarice información clave por medio de mapas y gráficos interactivos en dos reportes:
+		  <ul>
+			<li>Población por país y continente</li>
+			<li>Indicadores mundiales de esperanza de vida y mortalidad infantil</li>
+		  </ul>
+        </p>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Capturas</p>
+          <h2>Paginas del reporte</h2>
+        </div>
+        <div class="screenshot-grid">
+          <figure class="screenshot-card">
+            <img src="../assets/img/powerbi-poblacionArea.png" alt="Dashboard ejecutivo en Power BI">
+            <figcaption>Gráficos interactivos con segmentacion de datos por categorías. </figcaption>
+          </figure>
+          <figure class="screenshot-card">
+			<img src="../assets/img/powerbi-poblacionMortalidad.png" alt="Dashboard de productos en Power BI">
+			<figcaption>Analisis de mortalidad infantil y esperanza de vida con diferentes segmentadores.
+			Correlación y tendencias entre valores de neustras fuentes de datos.</figcaption>
+		  </figure>
+		  <figure class="screenshot-card">
+			<img src="../assets/img/powerbi-poblacionModelado.png" alt="Dashboard de productos en Power BI">
+			<figcaption>Tablas normalizadas para trabajar con un modelado copo de nieve(Snowflake)</figcaption>
+		  </figure>
+        </div>
+      </section>
+
+      <section class="section split">
+        <div>
+          <p class="eyebrow">Modelo</p>
+          <h2>Tablas y relaciones</h2>
+        </div>
+        <div class="content-list">
+          <p>
+            El modelo sigue una estructura estrella: tablas de hechos con indicadores y poblacion y dimensiones de países y continentes.
+          </p>
+          <ul>
+            <li><strong>Countries:</strong> Países, código y contitente al que pertenecen.</li>
+            <li><strong>Infant+death+rate:</strong> País e indice de mortalidad infantil.</li>
+            <li><strong>Life+expectancy:</strong> País y expectativa de vida.</li>
+            <li><strong>Population:</strong> País y poblacion.</li>
+          </ul>
+        </div>
+      </section>
+
+
+      <section class="section split">
+        <div>
+          <p class="eyebrow">Aprendizajes</p>
+          <h2>Decisiones tecnicas</h2>
+        </div>
+        <div class="content-list">
+          <ul>
+            <li>Utilizar Countries como tabla intermediaria  para traducir países y continentes del ingles al español. ES oculta y solo queda la relación que es necesaria.</li>
+            <li>Ocultar columnas que sirvieron para formar la relación. Para evitar seleccionar campos incorrectos.</li>
+            <li>Preparación de columnas nueveas mediante condiciones. Power Query.</li>
+            
+          </ul>
+        </div>
+      </section>
+
+      <section class="section contact">
+        <p class="eyebrow">Estado</p>
+        <h2>Proyecto documentado para portafolio.</h2>
+        <p>
+          Cuando publiques el reporte con datos ficticios, agrega aqui el enlace de
+          Power BI Publish to Web o capturas reales del dashboard.
+        </p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span><a href="../index.html">Volver al portafolio</a></span>
+      <span>Proyecto Power BI</span>
+    </footer>
+  </body>
+</html>
