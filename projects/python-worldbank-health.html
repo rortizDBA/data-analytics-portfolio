@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Proyecto Power BI | Indicadores Globales de Salud</title>
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+    <header class="site-header compact">
+      <nav class="nav">
+        <a class="brand" href="../index.html">Data Analytics Portfolio</a>
+        <div class="nav-links">
+          <a href="../index.html#proyectos">Proyectos</a>
+          <a href="../index.html#habilidades">Habilidades</a>
+          <a href="../index.html#contacto">Contacto</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="case-study">
+      <section class="case-hero">
+        <p class="eyebrow">Python pipeline · World Bank API · Power BI</p>
+        <h1>Indicadores globales de salud y desarrollo</h1>
+        <p>
+          Proyecto de analitica construido con datos publicos de World Bank. El trabajo
+          incluye extraccion por API, guardado de datos crudos, transformacion con Python,
+          generacion de CSV limpios y modelado en Power BI para analizar mortalidad
+          infantil, esperanza de vida, poblacion, PIB per capita y acceso a servicios.
+        </p>
+        <div class="case-meta">
+          <span>Herramientas: Python y Power BI Desktop</span>
+          <span>Fuente: World Bank API</span>
+          <span>Periodo: 2010-2024</span>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Vista general</p>
+          <h2>Objetivo del proyecto</h2>
+        </div>
+        <p class="wide-text">
+          El objetivo fue construir un flujo completo de datos, desde una fuente publica
+          hasta un dashboard analitico. El reporte permite explorar como se relacionan el
+          nivel de ingreso, el PIB per capita, el gasto en salud, el acceso a electricidad
+          y la esperanza de vida con la mortalidad infantil por pais y region.
+        </p>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Pipeline</p>
+          <h2>Trabajo realizado con Python</h2>
+        </div>
+        <div class="content-list">
+          <p>
+            El pipeline se desarrollo en Python usando librerias estandar. El script
+            consulta la API de World Bank, maneja paginacion, guarda los JSON originales
+            y genera archivos procesados para Power BI.
+          </p>
+          <ul>
+            <li><strong>Extraccion:</strong> descarga catalogo de paises e indicadores desde World Bank API.</li>
+            <li><strong>Persistencia raw:</strong> guarda respuestas JSON en `data_raw` para trazabilidad.</li>
+            <li><strong>Limpieza:</strong> elimina agregados regionales, conserva paises validos y cruza por codigo ISO3.</li>
+            <li><strong>Transformacion:</strong> convierte los indicadores a una tabla pais-anio.</li>
+            <li><strong>Modelado:</strong> genera `DimCountry`, `DimYear` y `FactCountryIndicators`.</li>
+            <li><strong>Localizacion:</strong> crea una version es-MX con `;` como delimitador y `,` decimal para Power BI.</li>
+            <li><strong>Calidad:</strong> genera un reporte de valores faltantes por indicador.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Capturas</p>
+          <h2>Paginas del reporte</h2>
+        </div>
+        <div class="screenshot-grid">
+          <figure class="screenshot-card">
+            <img src="../assets/img/powerbi-PIB_MortalidadIn.png" alt="Dashboard de indicadores globales de salud">
+            <figcaption>
+              Analizar cómo se relacionan indicadores socioeconómicos con salud poblacional por país y región. Analisis global de mortalidad infantil, esperanza de vida, PIB per capita
+              y segmentacion por region, añio y nivel de ingreso.
+            </figcaption>
+          </figure>
+          
+        </div>
+      </section>
+
+      <section class="section split">
+        <div>
+          <p class="eyebrow">Fuente</p>
+          <h2>Indicadores usados</h2>
+        </div>
+        <div class="content-list">
+          <p>
+            Los datos provienen de World Development Indicators de World Bank. Se
+            eligieron indicadores que permiten comparar salud, desarrollo economico y
+            acceso a servicios basicos.
+          </p>
+          <ul>
+            <li><strong>SP.DYN.IMRT.IN:</strong> mortalidad infantil por cada 1,000 nacidos vivos.</li>
+            <li><strong>SP.POP.TOTL:</strong> poblacion total.</li>
+            <li><strong>SP.DYN.LE00.IN:</strong> esperanza de vida al nacer.</li>
+            <li><strong>NY.GDP.PCAP.CD:</strong> PIB per capita en USD.</li>
+            <li><strong>SH.XPD.CHEX.PC.CD:</strong> gasto en salud per capita en USD.</li>
+            <li><strong>EG.ELC.ACCS.ZS:</strong> acceso a electricidad como porcentaje de poblacion.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section split">
+        <div>
+          <p class="eyebrow">Modelo</p>
+          <h2>Tablas y relaciones</h2>
+        </div>
+        <div class="content-list">
+          <p>
+            Para Power BI se uso un modelo estrella sencillo, suficiente para analizar
+            indicadores por pais, region, nivel de ingreso y anio.
+          </p>
+          <ul>
+            <li><strong>DimCountry:</strong> pais, codigo ISO3, region, nivel de ingreso, capital, latitud y longitud.</li>
+            <li><strong>DimYear:</strong> anios disponibles de 2010 a 2024.</li>
+            <li><strong>FactCountryIndicators:</strong> indicadores numericos a grano pais-anio.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Python</p>
+          <h2>Fragmentos clave del pipeline</h2>
+        </div>
+        <div class="code-grid">
+          <pre><code>def fetch_json(endpoint, params=None, retries=3):
+    query = urlencode(params or {})
+    url = f"{API_BASE_URL}/{endpoint}"
+    if query:
+        url = f"{url}?{query}"
+
+    with urlopen(url, timeout=45) as response:
+        return json.loads(response.read().decode("utf-8"))</code></pre>
+          <pre><code>def fetch_paginated(endpoint, params=None):
+    first_page = fetch_json(endpoint, {**(params or {}), "page": 1})
+    metadata = first_page[0]
+    rows = first_page[1] or []
+
+    for page in range(2, metadata.get("pages", 1) + 1):
+        payload = fetch_json(endpoint, {**(params or {}), "page": page})
+        rows.extend(payload[1] or [])
+    return rows</code></pre>
+          <pre><code>INDICATORS = {
+    "SP.DYN.IMRT.IN": "infant_mortality_per_1000",
+    "SP.POP.TOTL": "population",
+    "SP.DYN.LE00.IN": "life_expectancy",
+    "NY.GDP.PCAP.CD": "gdp_per_capita_usd"
+}</code></pre>
+          <pre><code>DimCountry[country_code] 1:* FactCountryIndicators[country_code]
+DimYear[year] 1:* FactCountryIndicators[year]</code></pre>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">DAX</p>
+          <h2>Medidas principales</h2>
+        </div>
+        <div class="code-grid">
+          <pre><code>Mortalidad Infantil Promedio =
+AVERAGE ( FactCountryIndicators[infant_mortality_per_1000] )</code></pre>
+          <pre><code>Esperanza de Vida Promedio =
+AVERAGE ( FactCountryIndicators[life_expectancy] )</code></pre>
+          <pre><code>PIB per Capita Promedio =
+AVERAGE ( FactCountryIndicators[gdp_per_capita_usd] )</code></pre>
+          <pre><code>Poblacion Total =
+SUM ( FactCountryIndicators[population] )</code></pre>
+        </div>
+      </section>
+
+      <section class="section split">
+        <div>
+          <p class="eyebrow">Aprendizajes</p>
+          <h2>Decisiones tecnicas</h2>
+        </div>
+        <div class="content-list">
+          <ul>
+            <li>Separar datos crudos y procesados permite auditar el origen de los resultados.</li>
+            <li>El cruce correcto con World Bank requiere usar `countryiso3code`, no el codigo ISO2 del objeto `country`.</li>
+            <li>La version es-MX de los CSV evita errores de interpretacion decimal en Power BI.</li>
+            <li>El modelo estrella reduce ambiguedad y facilita medidas reutilizables.</li>
+            <li>El scatter de PIB per capita vs mortalidad infantil ayuda a visualizar desigualdad entre paises.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section contact">
+        <p class="eyebrow">Estado</p>
+        <h2>Proyecto documentado para portafolio.</h2>
+        <p>
+          El reporte queda listo para publicarse con capturas estaticas. El siguiente
+          paso opcional es agregar un enlace interactivo de Power BI Service cuando
+          este disponible.
+        </p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span><a href="../index.html">Volver al portafolio</a></span>
+      <span>Proyecto Python + Power BI</span>
+    </footer>
+  </body>
+</html>
