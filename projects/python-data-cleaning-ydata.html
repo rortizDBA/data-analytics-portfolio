@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Proyecto Python | Data Cleaning con ydata-profiling</title>
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+    <header class="site-header compact">
+      <nav class="nav">
+        <a class="brand" href="../index.html">Data Analytics Portfolio</a>
+        <div class="nav-links">
+          <a href="../index.html#proyectos">Proyectos</a>
+          <a href="../index.html#habilidades">Habilidades</a>
+          <a href="../index.html#contacto">Contacto</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="case-study">
+      <section class="case-hero">
+        <p class="eyebrow">Python · Pandas · ydata-profiling</p>
+        <h1>Limpieza y perfilado de datos</h1>
+        <p>
+          Proyecto practico de limpieza de datos enfocado en cargar, explorar,
+          diagnosticar y preparar un dataset para analisis. El trabajo utiliza
+          Pandas para la depuracion y ydata-profiling para generar un reporte
+          automatico de calidad, distribuciones, duplicados, valores faltantes
+          e integridad general.
+        </p>
+        <div class="case-meta">
+          <span>Herramientas: Python, Pandas, ydata-profiling</span>
+          <span>Tipo: Data cleaning</span>
+          <span>Salida: dataset limpio y reporte HTML</span>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Objetivo</p>
+          <h2>Preparar datos confiables antes del analisis</h2>
+        </div>
+        <p class="wide-text">
+          El objetivo del proyecto fue aplicar un flujo basico pero necesario de
+          limpieza de datos: cargar la fuente, inspeccionar su estructura, detectar
+          problemas de calidad, manejar duplicados, revisar columnas faltantes y
+          validar integridad antes de generar una version lista para analisis.
+        </p>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Proceso</p>
+          <h2>Trabajo realizado</h2>
+        </div>
+        <div class="content-list">
+          <ul>
+            <li><strong>Carga inicial:</strong> lectura del dataset con Pandas y revision de dimensiones, tipos de datos y primeras filas.</li>
+            <li><strong>Exploracion:</strong> analisis de estructura, columnas, valores unicos y estadisticas descriptivas.</li>
+            <li><strong>Duplicados:</strong> identificacion y tratamiento de registros duplicados para evitar conteos inflados.</li>
+            <li><strong>Valores faltantes:</strong> deteccion de columnas incompletas y evaluacion de su impacto en el analisis.</li>
+            <li><strong>Integridad:</strong> revision de consistencia en columnas clave, tipos de datos y posibles valores fuera de rango.</li>
+            <li><strong>Perfilado automatico:</strong> generacion de un reporte HTML con ydata-profiling para documentar hallazgos.</li>
+            <li><strong>Salida limpia:</strong> exportacion de una version procesada del dataset para analisis posterior.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Python</p>
+          <h2>Fragmentos representativos</h2>
+        </div>
+        <div class="code-grid">
+          <pre><code>import pandas as pd
+
+df = pd.read_csv("data/raw/source.csv")
+
+df.head()
+df.info()
+df.describe(include="all")</code></pre>
+          <pre><code>duplicados = df.duplicated().sum()
+faltantes = df.isna().sum().sort_values(ascending=False)
+
+print("Duplicados:", duplicados)
+print(faltantes)</code></pre>
+          <pre><code>df_clean = (
+    df
+    .drop_duplicates()
+    .copy()
+)
+
+df_clean.columns = (
+    df_clean.columns
+    .str.strip()
+    .str.lower()
+    .str.replace(" ", "_")
+)</code></pre>
+          <pre><code>from ydata_profiling import ProfileReport
+
+profile = ProfileReport(
+    df_clean,
+    title="Data Cleaning Report",
+    explorative=True
+)
+
+profile.to_file("reports/data_cleaning_report.html")</code></pre>
+        </div>
+      </section>
+
+      <section class="section split">
+        <div>
+          <p class="eyebrow">Calidad</p>
+          <h2>Validaciones realizadas</h2>
+        </div>
+        <div class="content-list">
+          <p>
+            El reporte de ydata-profiling se uso como apoyo para identificar problemas
+            que no siempre se detectan en una revision manual rapida.
+          </p>
+          <ul>
+            <li>Porcentaje de valores faltantes por columna.</li>
+            <li>Distribuciones y posibles valores atipicos.</li>
+            <li>Columnas constantes o con baja variabilidad.</li>
+            <li>Correlaciones entre variables numericas.</li>
+            <li>Tipos inferidos y posibles inconsistencias.</li>
+            <li>Duplicados y cardinalidad de variables categoricas.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section split">
+        <div>
+          <p class="eyebrow">Entregables</p>
+          <h2>Salida del proyecto</h2>
+        </div>
+        <div class="content-list">
+          <ul>
+            <li><strong>Notebook o script:</strong> flujo de limpieza reproducible en Python.</li>
+            <li><strong>Dataset limpio:</strong> archivo procesado para analisis posterior.</li>
+            <li><strong>Reporte HTML:</strong> perfil automatico generado con ydata-profiling.</li>
+            <li><strong>Documentacion:</strong> resumen de problemas encontrados y decisiones de limpieza.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section split">
+        <div>
+          <p class="eyebrow">Aprendizajes</p>
+          <h2>Decisiones tecnicas</h2>
+        </div>
+        <div class="content-list">
+          <ul>
+            <li>Separar la inspeccion inicial de la limpieza ayuda a no modificar datos sin entenderlos primero.</li>
+            <li>Los duplicados deben validarse con contexto, no eliminarse a ciegas.</li>
+            <li>Los valores faltantes no siempre se imputan; a veces conviene conservarlos o excluir columnas segun el objetivo.</li>
+            <li>Un reporte automatico acelera el diagnostico, pero las decisiones finales requieren criterio analitico.</li>
+            <li>Documentar la limpieza hace que el proceso sea reproducible y defendible.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section contact">
+        <p class="eyebrow">Estado</p>
+        <h2>Proyecto documentado para portafolio.</h2>
+        <p>
+          Caso breve orientado a demostrar fundamentos de limpieza, validacion y
+          perfilado de datos con Python antes de construir analisis o dashboards.
+        </p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span><a href="../index.html">Volver al portafolio</a></span>
+      <span>Proyecto Python Data Cleaning</span>
+    </footer>
+  </body>
+</html>
