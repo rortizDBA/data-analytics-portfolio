@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Proyecto BI | Analisis estadistico de ventas y outliers</title>
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+    <header class="site-header compact">
+      <nav class="nav">
+        <a class="brand" href="../index.html">Data Analytics Portfolio</a>
+        <div class="nav-links">
+          <a href="../index.html#proyectos">Proyectos</a>
+          <a href="../index.html#habilidades">Habilidades</a>
+          <a href="../index.html#contacto">Contacto</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="case-study">
+      <section class="case-hero">
+        <p class="eyebrow">Python · Estadistica · Power BI</p>
+        <h1>Analisis estadistico de ventas y outliers</h1>
+        <p>
+          Proyecto de Business Intelligence con enfoque estadistico. Se genero un
+          dataset sintetico de ventas con Python y se calcularon metricas como media,
+          mediana, desviacion estandar, coeficiente de variacion, z-score, limites IQR,
+          outliers y correlaciones para construir un dashboard analitico en Power BI.
+        </p>
+        <div class="case-meta">
+          <span>Herramientas: Python y Power BI Desktop</span>
+          <span>Datos: ventas sinteticas controladas</span>
+          <span>Enfoque: outliers y variabilidad</span>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Objetivo</p>
+          <h2>Usar estadistica para explicar el comportamiento de ventas</h2>
+        </div>
+        <p class="wide-text">
+          El objetivo fue construir un reporte que no solo muestre ventas, sino que
+          ayude a identificar dispersion, ventas atipicas, categorias con mayor
+          variabilidad y relaciones entre descuento, unidades, margen, entregas,
+          satisfaccion y devoluciones.
+        </p>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Pipeline</p>
+          <h2>Trabajo realizado con Python</h2>
+        </div>
+        <div class="content-list">
+          <p>
+            El proyecto usa un script reproducible para generar datos y preparar salidas
+            listas para Power BI. El dataset fue creado con patrones intencionales:
+            estacionalidad, descuentos que elevan unidades, entregas tardias que reducen
+            satisfaccion y una pequena proporcion de pedidos especiales de alto valor.
+          </p>
+          <ul>
+            <li><strong>Generacion de datos:</strong> ventas 2024-2025, productos, tiendas, clientes y calendario.</li>
+            <li><strong>Senales estadisticas:</strong> ventas sesgadas a la derecha, dispersion por categoria y pedidos extremos.</li>
+            <li><strong>Outliers:</strong> calculo de z-score y regla IQR para marcar ventas atipicas.</li>
+            <li><strong>Resumenes:</strong> media, mediana, desviacion estandar, percentiles, IQR y coeficiente de variacion.</li>
+            <li><strong>Correlaciones:</strong> matriz entre ventas, unidades, descuento, entrega, satisfaccion y margen.</li>
+            <li><strong>Localizacion:</strong> CSVs normales y version es-MX con `;` y coma decimal para Power BI.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Capturas</p>
+          <h2>Paginas del reporte</h2>
+        </div>
+        <div class="screenshot-grid">
+          <figure class="screenshot-card">
+			<img src="../assets/img/salesStatistics_kpis.png" alt="Dashboard de poblacion por pais y continente">
+            <figcaption>KPIs, tendencia mensual y ventas por region/categoria.</figcaption>
+          </figure>
+          <figure class="screenshot-card">
+            <img src="../assets/img/salesStatistics_dist.png" alt="Dashboard de poblacion por pais y continente">
+            <figcaption>Histograma por rangos, media, mediana, dispersion y variabilidad.</figcaption>
+          </figure>
+          <figure class="screenshot-placeholder">
+            <span>Outliers</span>
+            <figcaption>Detalle de ventas atipicas, z-score, IQR y pedidos especiales.</figcaption>
+          </figure>
+          <figure class="screenshot-placeholder">
+            <span>Correlaciones</span>
+            <figcaption>Relacion entre descuento, unidades, entrega, satisfaccion y margen.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="section split">
+        <div>
+          <p class="eyebrow">Modelo</p>
+          <h2>Tablas y relaciones</h2>
+        </div>
+        <div class="content-list">
+          <p>
+            El modelo principal se construyo como estrella alrededor de `FactSales`.
+            Las tablas estadisticas se dejaron como auxiliares para paginas especificas,
+            evitando relaciones innecesarias o ambiguas.
+          </p>
+          <ul>
+            <li><strong>FactSales:</strong> ventas con variables operativas y flags estadisticos.</li>
+            <li><strong>DimDate:</strong> calendario 2024-2025.</li>
+            <li><strong>DimStore:</strong> tiendas, ciudades y regiones.</li>
+            <li><strong>DimProduct:</strong> productos, categorias, costo y precio.</li>
+            <li><strong>DimCustomer:</strong> clientes, segmento y antiguedad.</li>
+            <li><strong>StatCorrelationMatrix:</strong> correlaciones precalculadas.</li>
+            <li><strong>StatSummaryRegionCategory:</strong> resumen estadistico por region y categoria.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Estadistica</p>
+          <h2>Conceptos aplicados</h2>
+        </div>
+        <div class="code-grid">
+          <pre><code>Z-score =
+(venta - media) / desviacion_estandar
+
+Outlier por z-score:
+ABS(z) >= 3</code></pre>
+          <pre><code>IQR =
+Q3 - Q1
+
+Limite inferior = Q1 - 1.5 * IQR
+Limite superior = Q3 + 1.5 * IQR</code></pre>
+          <pre><code>Coeficiente de variacion =
+desviacion_estandar / media
+
+Sirve para comparar dispersion relativa.</code></pre>
+          <pre><code>Correlacion de Pearson =
+relacion lineal entre dos variables numericas.</code></pre>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">DAX</p>
+          <h2>Medidas principales</h2>
+        </div>
+        <div class="code-grid">
+          <pre><code>Venta Promedio =
+AVERAGE ( FactSales[net_sales] )</code></pre>
+          <pre><code>Venta Mediana =
+MEDIAN ( FactSales[net_sales] )</code></pre>
+          <pre><code>Desviacion Ventas =
+STDEV.P ( FactSales[net_sales] )</code></pre>
+          <pre><code>Coeficiente Variacion =
+DIVIDE ( [Desviacion Ventas], [Venta Promedio] )</code></pre>
+          <pre><code>Outliers =
+CALCULATE (
+    DISTINCTCOUNT ( FactSales[sale_id] ),
+    FactSales[outlier_type] <> "Normal"
+)</code></pre>
+          <pre><code>% Outliers =
+DIVIDE ( [Outliers], [Ordenes] )</code></pre>
+        </div>
+      </section>
+
+      <section class="section split">
+        <div>
+          <p class="eyebrow">Analisis</p>
+          <h2>Preguntas que responde</h2>
+        </div>
+        <div class="content-list">
+          <ul>
+            <li>Que tan diferente es la media respecto a la mediana?</li>
+            <li>Que categorias concentran mas ventas atipicas?</li>
+            <li>Que regiones tienen mayor variabilidad relativa?</li>
+            <li>Que pedidos estan fuera del comportamiento normal?</li>
+            <li>Los descuentos se asocian con mas unidades vendidas?</li>
+            <li>Los dias de entrega afectan la satisfaccion del cliente?</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section split">
+        <div>
+          <p class="eyebrow">Aprendizajes</p>
+          <h2>Decisiones tecnicas</h2>
+        </div>
+        <div class="content-list">
+          <ul>
+            <li>La media y la mediana cuentan historias distintas cuando la distribucion esta sesgada.</li>
+            <li>El metodo IQR detecta bien valores extremos en distribuciones con cola larga.</li>
+            <li>El z-score ayuda a medir que tan lejos esta una venta respecto al comportamiento promedio.</li>
+            <li>Las tablas estadisticas auxiliares pueden permanecer desconectadas para evitar ambiguedad en el modelo.</li>
+            <li>La version es-MX de los CSV evita errores de interpretacion decimal en Power BI.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section contact">
+        <p class="eyebrow">Estado</p>
+        <h2>Proyecto en construccion para portafolio.</h2>
+        <p>
+          Las capturas finales se agregaran cuando terminen las paginas de distribucion,
+          outliers, correlaciones y operaciones.
+        </p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span><a href="../index.html">Volver al portafolio</a></span>
+      <span>Proyecto BI con estadistica</span>
+    </footer>
+  </body>
+</html>
